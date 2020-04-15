@@ -34,6 +34,12 @@ class Node:
 
     def __repr__(self):
         return str(self.x) + "," + str(self.y)
+    
+    def __add__(self,other):
+        if (self.x == other.x) and (self.y == other.y):
+            return True
+        else:
+            return False
 
 
 gx = int(raw_input("Please enter x-coordinate:  "))
@@ -66,7 +72,7 @@ discarded = list()
 pathx = []
 pathy = []
 
-while not len(queue) == 0:
+while queue:
     current_node = queue[0]
     if (current_node.x, current_node.y) == (gx, gy):
         pathx = [sx] + current_node.pathx
@@ -77,13 +83,10 @@ while not len(queue) == 0:
         if not((neighbor.x, neighbor.y) in zip(ox, oy)):
             if (neighbor.x, neighbor.y) not in discarded:
                 if (0 <= neighbor.x <= borders[0]) and (0 <= neighbor.y <= borders[1]):
-                    for node in range(len(queue)):
-                        if (queue[node].x, queue[node].y) == (neighbor.x, neighbor.y):
-                            break
-                        if node == len(queue) - 1:
-                            neighbor.pathx = current_node.pathx + [neighbor.x]
-                            neighbor.pathy = current_node.pathy + [neighbor.y]
-                            queue.append(neighbor)
+                    if neighbor not in queue:
+                        neighbor.pathx = current_node.pathx + [neighbor.x]
+                        neighbor.pathy = current_node.pathy + [neighbor.y]
+                        queue.append(neighbor)
 
     #print(queue)
     discarded.append((current_node.x, current_node.y))
@@ -100,8 +103,3 @@ plt.grid(True)
 plt.axis("equal")
 
 plt.show()
-
-
-
-
-
