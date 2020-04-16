@@ -35,7 +35,7 @@ class Node:
     def __repr__(self):
         return str(self.x) + "," + str(self.y)
     
-    def __add__(self,other):
+    def __eq__(self,other):
         if (self.x == other.x) and (self.y == other.y):
             return True
         else:
