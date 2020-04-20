@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from timeit import default_timer as time
 start = time()
-steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, -1), (1, 0), (-1, -1)]
+steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
 borders = [5, 5]
 start = time()
 

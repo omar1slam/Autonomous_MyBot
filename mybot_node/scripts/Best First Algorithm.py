@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from timeit import default_timer as time
 start = time()
-steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, -1), (1, 0), (-1, -1)]
+steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
 borders = [5, 5]
 start = time()
 
@@ -40,8 +40,8 @@ sx = 0
 sy = 5
 
 """ Coordinates of obstacles"""
-ox = [1,1,1,1,3,3,3,3]
-oy = [0,1,2,3,5,4,3,2]
+ox = [1,1,1,1,3,3,3]
+oy = [0,1,2,3,5,4,3]
 
 current_node = Node(sx, sy)
 
@@ -65,8 +65,8 @@ while 1:
     sorted_queue[0].pathx = current_node.pathx + [sorted_queue[0].x]
     sorted_queue[0].pathy = current_node.pathy + [sorted_queue[0].y]
     current_node = sorted_queue[0]
-    queue.clear()
-    sorted_queue.clear()
+    queue = []
+    #sorted_queue.clear()
 
     for i in steps:
         neighbor = current_node + i

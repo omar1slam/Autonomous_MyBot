@@ -7,7 +7,7 @@ from std_msgs.msg import String, Float32MultiArray
 import rospy
 import numpy as np
 
-steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, -1), (1, 0), (-1, -1)]
+steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
 
 rospy.init_node('Planner',anonymous=True)
 pub= rospy.Publisher('path',Float32MultiArray,queue_size=10)
