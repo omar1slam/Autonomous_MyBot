@@ -1,20 +1,10 @@
-#! /usr/bin/env python
 import math
 from operator import attrgetter
 import matplotlib.pyplot as plt
-import cv2
-from std_msgs.msg import String, Float32MultiArray
-import rospy
 import numpy as np
-
+from timeit import default_timer as time
+start = time()
 steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, -1), (1, 0), (-1, -1)]
-
-rospy.init_node('Planner',anonymous=True)
-pub= rospy.Publisher('path',Float32MultiArray,queue_size=10)
-msg = Float32MultiArray()
-
-
-
 borders = [5, 5]
 
 
@@ -30,24 +20,22 @@ class Node:
 
     def __repr__(self):
         return str(self.x) + "," + str(self.y)
-    
-    def __eq__(self,other):
+
+    def __eq__(self, other):
         if (self.x == other.x) and (self.y == other.y):
             return True
         else:
             return False
 
 
-gx = int(raw_input("Please enter x-coordinate:  "))
-gy = int(raw_input("Please enter y-coordinate:  "))
-print(gx,gy)
 
+gx = 4
+gy = 5
 sx = 0
-sy = 0  
+sy = 5
 
-
-ox = []
-oy = []
+ox = [1,1,1,1,3,3,3,3]
+oy = [0,1,2,3,5,4,3,2]
 
 
 current_node = Node(sx, sy)
@@ -69,18 +57,17 @@ while queue:
         if not((neighbor.x, neighbor.y) in zip(ox, oy)):
             if (neighbor.x, neighbor.y) not in discarded:
                 if (0 <= neighbor.x <= borders[0]) and (0 <= neighbor.y <= borders[1]):
-                    if neighbor not in queue:
-                        neighbor.pathx = current_node.pathx + [neighbor.x]
-                        neighbor.pathy = current_node.pathy + [neighbor.y]
-                        queue.append(neighbor)
+                        if neighbor not in queue:
+                            neighbor.pathx = current_node.pathx + [neighbor.x]
+                            neighbor.pathy = current_node.pathy + [neighbor.y]
+                            queue.append(neighbor)
 
-    #print(queue)
+    print(queue)
     discarded.append((current_node.x, current_node.y))
-    del queue[0]
+    queue.pop(0)
 
-msg.data = pathx+pathy
-pub.publish(msg)
-
+end = time()
+print(end-start)
 plt.plot(gx, gy, "xb")
 plt.plot(sx, sy, "xb")
 plt.plot(ox, oy, ".k")
